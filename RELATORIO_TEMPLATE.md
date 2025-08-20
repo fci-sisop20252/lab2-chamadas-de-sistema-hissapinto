@@ -13,19 +13,21 @@ strace -e write ./ex1b_write
 ### Análise
 
 **1. Quantas syscalls write() cada programa gerou?**
-- ex1a_printf: _____ syscalls
-- ex1b_write: _____ syscalls
+- ex1a_printf: 9 syscalls
+- ex1b_write: 7 syscalls
 
 **2. Por que há diferença entre printf() e write()?**
 
 ```
-[Sua análise aqui]
+O printf() é um comando da linguagem, em que esse aciona o write() para poder imprimir.
+Já o Write() é um comando do sistema operacional linux, em que esse se comunica com o kernel, para este executar a ação.
 ```
 
 **3. Qual implementação você acha que é mais eficiente? Por quê?**
 
 ```
-[Sua análise aqui]
+O printf(), por ter um buffer para agrupar diversas chamadas de write(), é mais eficiente.
+Assim, ele chama o syscall quando está cheio ou forçado.
 ```
 
 ---

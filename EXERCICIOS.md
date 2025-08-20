@@ -162,7 +162,7 @@ strace -o traces/ex2_trace.txt ./ex2_leitura
 ```
 
 ### Passo 5: Experimentos
-
+strace
 1. **Mudar tamanho do buffer:**
    - Mude `BUFFER_SIZE` para 10
    - Recompile e execute

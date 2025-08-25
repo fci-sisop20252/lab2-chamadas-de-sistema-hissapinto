@@ -95,29 +95,31 @@ Quando a viariável bytes_lidos armazena o valor 0, retornado do comando read, s
 ## Exercício 4 - Cópia de Arquivo
 
 ### Resultados:
-- Bytes copiados: _____
-- Operações: _____
-- Tempo: _____ segundos
-- Throughput: _____ KB/s
+- Bytes copiados: 1364
+- Operações: 6
+- Tempo: 0.000193 segundos
+- Throughput: 6901.72 KB/s
 
 ### Verificação:
 ```bash
 diff dados/origem.txt dados/destino.txt
 ```
-Resultado: [ ] Idênticos [ ] Diferentes
+Resultado: [X] Idênticos [ ] Diferentes
 
 ### Análise
 
 **1. Por que devemos verificar que bytes_escritos == bytes_lidos?**
 
 ```
-[Sua análise aqui]
+Para ter certeza que o arquivo foi copiado corretamente e em sua totalidade.
 ```
 
 **2. Que flags são essenciais no open() do destino?**
 
 ```
-[Sua análise aqui]
+O_CREAT: Para criar o arquivo caso ele não exista.
+O_WRONLY: Para indicar que a abertura é apenas para escrita.
+O_TRUNC: Para limpar o arquivo caso ele já exista e possua conteúdo.
 ```
 
 ---
@@ -129,19 +131,19 @@ Resultado: [ ] Idênticos [ ] Diferentes
 **1. Como as syscalls demonstram a transição usuário → kernel?**
 
 ```
-[Sua análise aqui]
+Sua chamada já é a demonstração da transição, pois a syscall funciona como ponte entre o pedido do usuário ao kernell, onde este irá executar o que o modo usuário precisa.
 ```
 
 **2. Qual é o seu entendimento sobre a importância dos file descriptors?**
 
 ```
-[Sua análise aqui]
+Indicar ao sistema qual arquivo deve ser selecionado, atribuindo um número (fd) ao arquivo.
 ```
 
 **3. Discorra sobre a relação entre o tamanho do buffer e performance:**
 
 ```
-[Sua análise aqui]
+Quanto maior o buffer, mais os comandos da linguagem conseguem acumular chamadas ao sistema, precisando mudar de modo (usuário/kernell) menos vezes e perdendo menos tempo entre transições. No entanto, quando maior o buffer mais memória deve ser alocada para este.
 ```
 
 ### Comparação de Performance
@@ -152,12 +154,13 @@ time ./ex4_copia
 time cp dados/origem.txt dados/destino_cp.txt
 ```
 
-**Qual foi mais rápido?** _____
+**Qual foi mais rápido?** cp do sistema
 
 **Por que você acha que foi mais rápido?**
 
 ```
-[Sua análise aqui]
+Eu diria que o o do sistema foi mais rápido pois ele tem 0m0.003s de sys e 0m0.000s de user e o outro tem 0m0.002s em cada.
+Imagino que o sistema tenha sido mais rápido por não precisar ficar alterando de modo (até porque o user dele estpa zerado).
 ```
 
 ---
@@ -165,9 +168,9 @@ time cp dados/origem.txt dados/destino_cp.txt
 ## Entrega
 
 Certifique-se de ter:
-- [ ] Todos os códigos com TODOs completados
-- [ ] Traces salvos em `traces/`
-- [ ] Este relatório preenchido como `RELATORIO.md`
+- [X] Todos os códigos com TODOs completados
+- [X] Traces salvos em `traces/`
+- [X] Este relatório preenchido como `RELATORIO.md`
 
 ```bash
 strace -e write -o traces/ex1a_trace.txt ./ex1a_printf

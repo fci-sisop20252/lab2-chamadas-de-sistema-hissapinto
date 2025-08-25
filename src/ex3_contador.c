@@ -20,7 +20,7 @@
 int main() {
     char buffer[BUFFER_SIZE];
     ssize_t bytes_lidos;
-    int fd;
+    int fd; //file descriptor
     int total_linhas = 0;
     int total_caracteres = 0;
     int total_reads = 0;

@@ -48,13 +48,13 @@ strace -e open,read,close ./ex2_leitura
 **1. Por que o file descriptor não foi 0, 1 ou 2?**
 
 ```
-[Sua análise aqui]
+Os registradores 0, 1 e 2 são reservados para entradas e saídas padrão (0 = stdin, 1 = stdout e 2 = stderr). O fd retornado foi o 3, o primeiro livre para o processo utilizar.
 ```
 
 **2. Como você sabe que o arquivo foi lido completamente?**
 
 ```
-[Sua análise aqui]
+A variável bytes_lidos nunca armazenou > 0 (números negativos), logo, nenhum erro no processo ocorreu, entendendo que ele foi executado em sua completude e sem erros.
 ```
 
 ---
@@ -62,32 +62,32 @@ strace -e open,read,close ./ex2_leitura
 ## Exercício 3 - Contador com Loop
 
 ### Resultados (BUFFER_SIZE = 64):
-- Linhas: _____ (esperado: 25)
-- Caracteres: _____
-- Chamadas read(): _____
-- Tempo: _____ segundos
+- Linhas: 24 (esperado: 25)
+- Caracteres: 1299
+- Chamadas read(): 21
+- Tempo: 0.000591 segundos
 
 ### Experimentos com buffer:
 
 | Buffer Size | Chamadas read() | Tempo (s) |
 |-------------|-----------------|-----------|
-| 16          |                 |           |
-| 64          |                 |           |
-| 256         |                 |           |
-| 1024        |                 |           |
+| 16          |        82       | 0.000249  |
+| 64          |        24       | 0.000591  |
+| 256         |        6        | 0.000067  |
+| 1024        |        2        | 0.000075  |
 
 ### Análise
 
 **1. Como o tamanho do buffer afeta o número de syscalls?**
 
 ```
-[Sua análise aqui]
+Com o buffer maior, o printf consegue armazenar mais chamadas para serem feitas ao write, acionando-o menos vezes.
 ```
 
 **2. Como você detecta o fim do arquivo?**
 
 ```
-[Sua análise aqui]
+Quando a viariável bytes_lidos armazena o valor 0, retornado do comando read, significa que acabou o conteúdo.
 ```
 
 ---
